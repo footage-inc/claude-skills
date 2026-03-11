@@ -61,6 +61,34 @@ mkdir -p "$HOME/.claude/logs"
 launchctl unload "$PLIST_PATH" 2>/dev/null || true
 launchctl load "$PLIST_PATH"
 
+# footage-aix リポの *-skills/ をシンボリックリンク
+FOOTAGE_AIX_REPO="$HOME/footage-aix"
+if [ -d "$FOOTAGE_AIX_REPO" ]; then
+  echo ""
+  echo "=== footage-aix Skills リンク ==="
+  for skills_dir in "$FOOTAGE_AIX_REPO"/*-skills; do
+    if [ -d "$skills_dir" ]; then
+      skill_name=$(basename "$skills_dir")
+      link_path="$TARGET/$skill_name"
+      if [ -L "$link_path" ]; then
+        echo "  既存リンク: $skill_name → $(readlink "$link_path")"
+      elif [ -d "$link_path" ]; then
+        echo "  スキップ（実ディレクトリが存在）: $skill_name"
+      else
+        ln -s "$skills_dir" "$link_path"
+        echo "  リンク作成: $skill_name → $skills_dir"
+      fi
+    fi
+  done
+else
+  echo ""
+  echo "[INFO] footage-aix リポが $FOOTAGE_AIX_REPO に見つかりません。"
+  echo "  footage-aix のスキルを連携するには:"
+  echo "  git clone git@github.com:oyuta-svg/footage-aix.git $FOOTAGE_AIX_REPO"
+  echo "  bash $TARGET/setup.sh  # 再実行でリンクされます"
+fi
+
+echo ""
 echo "=== セットアップ完了 ==="
 echo "スキル: $TARGET"
 echo "自動同期: 1時間ごと (LaunchAgent: $PLIST_NAME)"
