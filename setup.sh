@@ -29,33 +29,8 @@ fi
 
 echo "スキルのクローン完了: $TARGET"
 
-# LaunchAgent（自動同期）のインストール
-cat > "$PLIST_PATH" << EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>Label</key>
-  <string>${PLIST_NAME}</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>/usr/bin/git</string>
-    <string>-C</string>
-    <string>${TARGET}</string>
-    <string>pull</string>
-    <string>--ff-only</string>
-  </array>
-  <key>StartInterval</key>
-  <integer>3600</integer>
-  <key>RunAtLoad</key>
-  <true/>
-  <key>StandardOutPath</key>
-  <string>${HOME}/.claude/logs/skills-sync.log</string>
-  <key>StandardErrorPath</key>
-  <string>${HOME}/.claude/logs/skills-sync-error.log</string>
-</dict>
-</plist>
-EOF
+# LaunchAgent（自動同期）のインストール — リポのテンプレートから生成
+sed "s|__HOME__|${HOME}|g" "$TARGET/com.footage.claude-skills-sync.plist" > "$PLIST_PATH"
 
 mkdir -p "$HOME/.claude/logs"
 launchctl unload "$PLIST_PATH" 2>/dev/null || true
@@ -87,6 +62,39 @@ else
   echo "  git clone git@github.com:oyuta-svg/footage-aix.git $FOOTAGE_AIX_REPO"
   echo "  bash $TARGET/setup.sh  # 再実行でリンクされます"
 fi
+
+# Claude Code plugin としてスキルを登録
+PLUGIN_DIR="$HOME/.claude/plugins/marketplaces/claude-plugins-official/plugins/footage-aix-skills"
+echo ""
+echo "=== Claude Code Plugin 登録 ==="
+mkdir -p "$PLUGIN_DIR/.claude-plugin" "$PLUGIN_DIR/skills"
+
+cat > "$PLUGIN_DIR/.claude-plugin/plugin.json" << 'PJSON'
+{
+  "name": "footage-aix-skills",
+  "description": "FOOTAGE AIXプロジェクトのカスタムスキル集。SEO記事生成、GASデプロイ、ワークフロー管理等。",
+  "author": {
+    "name": "FOOTAGE",
+    "email": "o.yuta@footage-nursing.jp"
+  }
+}
+PJSON
+
+# 各スキルディレクトリの SKILL.md を plugin/skills/ にシンボリックリンク
+for skill_dir in "$TARGET"/*/; do
+  skill_name=$(basename "$skill_dir")
+  # .git や隠しディレクトリはスキップ
+  [[ "$skill_name" == .* ]] && continue
+  if [ -f "$skill_dir/SKILL.md" ]; then
+    link_path="$PLUGIN_DIR/skills/$skill_name"
+    if [ ! -L "$link_path" ] && [ ! -d "$link_path" ]; then
+      ln -s "$skill_dir" "$link_path"
+      echo "  Plugin登録: $skill_name"
+    else
+      echo "  既存: $skill_name"
+    fi
+  fi
+done
 
 echo ""
 echo "=== セットアップ完了 ==="
