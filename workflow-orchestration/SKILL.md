@@ -65,6 +65,19 @@ Never mark a task complete without proving it works. "It should work" is not acc
 - Run tests, check logs, demonstrate correctness with evidence
 - If you can't prove it works, it's not done
 
+### Verify + Guard Pattern (autoresearch統合)
+
+反復的な改善タスクでは、Verify（メトリクス改善）+ Guard（既存テスト通過）の二重検証を標準とする。
+
+- **Verify**: 改善対象のメトリクスが向上したか（テストカバレッジ、パフォーマンス、エラー数等）
+- **Guard**: 既存のテスト・ビルド・型チェックが通るか（リグレッション防止）
+- **Auto-rollback**: commit → verify → guard失敗時は `git revert` で即座にロールバック。`git reset --hard` は使わない（実験履歴を残す）
+- **判定ルール**:
+  - Verify改善 + Guard通過 → Keep
+  - Verify改善 + Guard失敗 → 実装を変えてリトライ（最大2回）、それでも失敗 → Revert
+  - Verify変化なし/悪化 → Revert
+- メトリクス駆動の改善には `/autoresearch` を使用する
+
 ## 5. Demand Elegance (Balanced)
 
 For non-trivial changes, pause and ask "is there a more elegant way?" before committing to an approach.
