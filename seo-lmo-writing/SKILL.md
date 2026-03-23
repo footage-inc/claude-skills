@@ -95,17 +95,62 @@ references/FEEDBACK_LOOP.md        # フィードバックループ定義
 
 - **DB URL**: https://www.notion.so/5688443c53764399bbb2c29779c67ec9
 - **データソースID**: `collection://61554e58-651c-4e7a-833d-38c5f0f3d897`
-- **ステータス**: `原文保管済` / `WP反映済` / `レビュー中` / `要修正`
+- **ステータス**: `原文保管済` / `WP反映済` / `レビュー中` / `要修正` / `公開準備完了`
 - **事業体**: `訪問看護集客` / `経営支援集客` / `デイサービス集客`
-- **記事メタ情報**: `article_reference.json`（80件のpage_id, post_id等）
 
 ## 記事カテゴリ
 
-| カテゴリ | 事業体 | 件数 | Post Type | ターゲット |
-|---|---|---|---|---|
-| houmon | 訪問看護集客 | 40 | column | 患者・家族・ケアマネ |
-| keiei | 経営支援集客 | 30 | column | 開業者・経営者 |
-| dayservice | デイサービス集客 | 10 | rec_column | パーキンソン病患者・家族 |
+| カテゴリ | 事業体 | 件数 | Post Type | 上限 | ターゲット |
+|---|---|---|---|---|---|
+| houmon | 訪問看護集客 | 41 | column | 100 | 患者・家族・ケアマネ |
+| keiei | 経営支援集客 | 27 | rec_column | 100 | 開業者・経営者 |
+| dayservice | デイサービス集客 | 11 | column | 30 | パーキンソン病患者・家族 |
+
+## ★ Notion ステータス自動更新プロトコル（必須）
+
+**Notionが正（Single Source of Truth）。記事に関するあらゆる操作の後、必ずNotionステータスを更新すること。**
+
+### ステータス遷移ルール
+
+```
+新規生成 → 「レビュー中」
+改善完了 → 「レビュー中」
+品質チェックNG → 「要修正」
+品質チェックOK → 「公開準備完了」
+WPに投稿/反映 → 「WP反映済」
+記事削除 → 「削除」
+```
+
+### 各タスク完了時の必須アクション
+
+| タスク | 完了時のNotion更新 |
+|--------|-------------------|
+| A. 新規記事生成 | `notion-update-page` → ステータス=「レビュー中」、ファイル名・keywords・公開日を設定 |
+| B. 記事改善 | `notion-update-page` → ステータス=「レビュー中」 |
+| C. 品質チェック | PASS→「公開準備完了」/ FAIL→「要修正」 |
+| WP投稿完了 | `notion-update-page` → ステータス=「WP反映済」、WP Post ID・WP URL・WP公開ステータス・WP最終更新日を設定 |
+| KB保存 | `notion-update-page` → ファイル名を設定（Git KBのファイル名と一致させる） |
+
+### 更新コマンド例
+
+```
+notion-update-page:
+  page_id: "{記事のNotion Page ID}"
+  command: "update_properties"
+  properties:
+    ステータス: "レビュー中"
+    ファイル名: "20260313_記事ファイル名.md"
+    WP Post ID: "3054"
+    WP URL: "https://footage-nursing.jp/column/3054/"
+    WP公開ステータス: "publish"
+    date:WP最終更新日:start: "2026-03-13"
+```
+
+### 禁止事項
+
+- ステータスを更新せずに記事内容だけ変更して終了すること
+- Git KBにファイルを追加してNotionのファイル名欄を空のままにすること
+- WPに投稿したのにNotion側のWP Post ID/URLを更新しないこと
 
 ## E. スキル自己改善
 
