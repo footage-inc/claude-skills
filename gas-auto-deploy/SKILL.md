@@ -187,3 +187,15 @@ JSON.stringify({length: target.getValue().length});
 - モデル番号（inmemory://model/N）はセッションごとに変わるため、常に長さで判別する
 - チャンク注入は1つずつ個別のJS呼び出しで実行すること（まとめて送ると文字数制限に引っかかる）
 - 検証済み: base64チャンク分割→結合→デコードの往復テスト完全一致確認 (2026-03-10)
+
+## 現在のデプロイ状態（動的取得）
+
+!`cd ~/dev/footage-handle 2>/dev/null && cat .clasp.json 2>/dev/null | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'Script ID: {d.get(\"scriptId\",\"?\")}')" 2>/dev/null && echo "Deploy: bash deploy.sh 'msg' (dev) / bash deploy.sh --prod 'msg' (prod)" || echo "(footage-handle未検出)"`
+
+## Gotchas
+
+- **`/u/0/` vs `/u/1/`**: 必ず `/u/0/` アカウントでアクセス。`/u/1/` は別Googleアカウントでデプロイ先が異なる
+- **Monaco Editor モデル番号**: `inmemory://model/N` のNはセッションごとに変わる。常にエディタ数（長さ）で判別する
+- **チャンク注入は1つずつ**: 複数チャンクをまとめてJS実行すると文字数制限で切れる。必ず個別実行
+- **dashboard.html 81KB超**: base64変換後はさらに大きくなる。チャンク分割数を十分に確保する（20チャンク以上）
+- **deploy.sh の --prod フラグ忘れ**: `bash deploy.sh "msg"` はdev、`bash deploy.sh --prod "msg"` がprod。devにデプロイして「反映されない」のよくあるミス

@@ -130,13 +130,17 @@ references/FEEDBACK_LOOP.md        # フィードバックループ定義
 - **ステータス**: `原文保管済` / `WP反映済` / `レビュー中` / `要修正` / `公開準備完了`
 - **事業体**: `訪問看護集客` / `経営支援集客` / `デイサービス集客`
 
-## 記事カテゴリ
+## 記事カテゴリ（動的取得）
 
-| カテゴリ | 事業体 | 件数 | Post Type | 上限 | ターゲット |
-|---|---|---|---|---|---|
-| houmon | 訪問看護集客 | 55 | column | 100 | 患者・家族・ケアマネ |
-| keiei | 経営支援集客 | 28 | rec_column | 100 | 開業者・経営者 |
-| dayservice | デイサービス集客 | 17 | column | 30 | 運動障害・介護予防対象者・家族 |
+以下は起動時にNotionから最新件数を取得する:
+
+!`ls ~/dev/footage-aix/article-skills/knowledge-base/訪問看護集客/*.md 2>/dev/null | wc -l | xargs printf "訪問看護集客: %d件 / " && ls ~/dev/footage-aix/article-skills/knowledge-base/経営支援集客/*.md 2>/dev/null | wc -l | xargs printf "経営支援集客: %d件 / " && ls ~/dev/footage-aix/article-skills/knowledge-base/デイサービス集客/*.md 2>/dev/null | wc -l | xargs printf "デイサービス集客: %d件\n" 2>/dev/null || echo "(Git KB未検出。フォールバック: 訪看55/経営28/デイ17)"`
+
+| カテゴリ | 事業体 | Post Type | 上限 | ターゲット |
+|---|---|---|---|---|
+| houmon | 訪問看護集客 | column | 100 | 患者・家族・ケアマネ |
+| keiei | 経営支援集客 | rec_column | 100 | 開業者・経営者 |
+| dayservice | デイサービス集客 | column | 30 | 運動障害・介護予防対象者・家族 |
 
 ### デイサービス記事のサブカテゴリ構成（上限30本）
 
@@ -377,3 +381,11 @@ Notion（正）= WP（公開版）= Git KB（ナレッジベース）
 - **ユーザー名**: footage_user
 - **パスワード**: @bw9nB8qi&sIaehlEKoBwO7Y
 - **注意**: カスタム投稿タイプ `column` はshow_in_rest: falseのため、REST API不可。ブラウザ操作で反映。
+
+## Gotchas
+
+- **Notion MCP `update_properties` が無言で失敗する**: curl直叩き+読み返し検証が必須。MCP経由のプロパティ更新は使わない
+- **予約投稿のkeywords/meta_description空欄**: future記事の37/39件が空欄のまま公開される問題が発生済み。生成時に必ず全プロパティ設定
+- **訪問看護/デイサービスの投稿タイプ混同**: 訪看・デイは`column`、経営支援は`rec_column`。間違えると別セクションに混入する
+- **DB外の高PV記事が改善対象外**: /column/2020/（896PV）等のTOP記事がNotionDB管理外。定期的にGA4でチェックし取り込む
+- **WP REST API非対応**: column/rec_columnはshow_in_rest未設定。WP反映は手動またはブラウザ操作のみ
