@@ -263,7 +263,7 @@ Notion（正）= WP（公開版）= Git KB（ナレッジベース）
    - または：リライト版ページをpromotion（元記事をアーカイブ→リライト版のプロパティを引き継ぎ）
 2. **WP更新**: Notionの全文をHTML変換してWPの既存記事を更新（CDPまたは手動）
 3. **Notion プロパティ更新**: `WP最終更新日` を更新日に設定
-4. **Git KB同期**: `gs_git_notion_sync.py` を実行してGit KBをNotionと一致させる
+4. **Git KB同期**: `~/dev/footage-aix/scripts/notion_to_md.py` を実行してGit KBをNotionと一致させる
 5. **検証**: Notion/WP/Gitの文字数が概ね一致していることを確認
 
 #### リライト時の注意
@@ -381,6 +381,7 @@ Notion（正）= WP（公開版）= Git KB（ナレッジベース）
 - **ユーザー名**: footage_user
 - **パスワード**: @bw9nB8qi&sIaehlEKoBwO7Y
 - **注意**: カスタム投稿タイプ `column` はshow_in_rest: falseのため、REST API不可。ブラウザ操作で反映。
+- **WPブラウザ操作手順**: `~/.claude/skills/gstack/browse/references/wordpress-operations.md` を参照。Cookie先行インポート、1操作1確認、wait 3000 が鉄則。
 
 ## Gotchas
 
