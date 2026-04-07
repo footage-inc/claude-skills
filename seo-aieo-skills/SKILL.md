@@ -379,7 +379,7 @@ Notion（正）= WP（公開版）= Git KB（ナレッジベース）
 - **サイト**: https://footage-nursing.jp
 - **WP管理画面**: https://footage-nursing.jp/app/login_73906/
 - **ユーザー名**: footage_user
-- **パスワード**: @bw9nB8qi&sIaehlEKoBwO7Y
+- **パスワード**: `.env` の `WP_APP_PASSWORD` または `/apikey-manager` で取得
 - **注意**: カスタム投稿タイプ `column` はshow_in_rest: falseのため、REST API不可。ブラウザ操作で反映。
 - **WPブラウザ操作手順**: `~/.claude/skills/gstack/browse/references/wordpress-operations.md` を参照。Cookie先行インポート、1操作1確認、wait 3000 が鉄則。
 
