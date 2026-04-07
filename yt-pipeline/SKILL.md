@@ -121,4 +121,4 @@ tail -20 ~/.bridge/logs/yt_watcher_stdout.log
 3. **`revision_failed` は永久停止ではない** — feedbackが来ていれば次回実行で再試行する（2026-04-07修正済み）
 4. **feedbackフィルタはBot以外の全ユーザー** — `APPROVAL_USER_ID` 以外からの修正指示も検出する（2026-04-07修正済み）
 5. **Markdown記法残存** — AI生成テキストにMarkdown記号が残るとAI作成と判断される。プロンプトで禁止済みだが、変換工程でも検証すべき
-6. **WP反映はブラウザ操作** — REST APIはcolumn/rec_columnで使用不可。gstack/browseでの操作手順は `~/.claude/skills/gstack/browse/references/wordpress-operations.md` を参照
+6. **WP反映はブラウザ操作** — REST APIはcolumn/rec_columnで使用不可。gstack/browseでの操作手順は `~/.claude/skills/seo-aieo-skills/references/wordpress-operations.md` を参照
