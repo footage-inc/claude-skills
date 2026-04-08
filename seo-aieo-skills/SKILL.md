@@ -289,13 +289,28 @@ Notion（正）= WP（公開版）= Git KB（ナレッジベース）
 - `post-new.php?post_type=rec_column` → 経営支援
 - 間違えた場合: 旧投稿を削除 → 正しいpost_typeで新規作成 → Notion WP Post ID更新
 
-### ⚠️ WP REST API 制約（2026-04-02現在）
+### ⚠️ WP REST API 制約（2026-04-08 FSEレビュー反映）
 
 - WPカスタム投稿タイプ `column` / `rec_column` は `show_in_rest` が未設定のため、**REST APIでの記事取得・投稿・更新は一切不可**
 - `/wp-json/wp/v2/columns` → 404、`/wp-json/wp/v2/rec_columns` → 404
-- FSEへmu-plugin設置を依頼中（`aix-seo-suite.php`）だが未対応
-- **リライト時のWP反映は手動（管理画面から直接編集）またはFSE対応後に自動化**
-- リライト成果物はNotion + Git KBに保存し、WP反映は別途手動で行う
+- **FSE対応不可確定（2026-04）**: FSE（フリースタイルエンターテイメント）はAIエージェントによる自動投稿運用の責任を負えないと回答。`show_in_rest` 有効化はFSE側では行わない
+- **WP反映は手動（管理画面から直接編集）またはブラウザ操作（gstack/browse）で実施**
+- リライト成果物はNotion + Git KBに保存し、WP反映は別途手動 or ブラウザ操作で行う
+
+### ⚠️ FSE SEO対策レビュー結果（2026-04）
+
+FSE（株式会社フリースタイルエンターテイメント）から以下の回答あり:
+
+| 項目 | FSE判断 | 対応方針 |
+|---|---|---|
+| meta description | **テーマ側で設定済み**（対応不要） | — |
+| OGPタグ | **テーマ側で設定済み**（対応不要） | — |
+| canonicalタグ | FSEが**順次実装** | 自己参照canonicalで重複クローリング抑制 |
+| 構造化データ | FSEが**随時実装**（パンくず・FAQ一部・求人は済み） | 残: FAQ(TOP/経営支援)、組織情報、記事(article) |
+| サイトマップ | FSEが**修正＋動的プラグイン導入** | 1,000URL中597件(60%)が不正URL |
+| mu-plugin (aix-seo-suite.php) | **却下** — 誤情報多数（架空住所・存在しないFAQ） | FSEが手動で施策実行 |
+| mu-plugin (aix-redirects.php) | **却下** — 元ページ内容不明で闇雲なリダイレクト非推奨 | テーマ一致の7件のみ再提案検討 |
+| REST API公開 | **FSE対応不可** | AIブラウザ操作（claude cowork等）での自動実装を推奨 |
 
 ### 禁止事項
 
@@ -337,15 +352,17 @@ Notion（正）= WP（公開版）= Git KB（ナレッジベース）
    - AI流入が多いテーマ領域を特定し、AIEO最適化の優先対象を決定
 4. **出力**: ギャップ一覧 + 推奨アクション（DB取込/リライト/新規生成）をレポート
 
-### 2026-04-03時点の既知ギャップ
+### 2026-04-08時点の既知ギャップ（GA4 90日分析結果）
 
 | テーマ | 現状 | 推奨アクション |
 |--------|------|---------------|
 | 訪問看護 費用・料金 | 削除（保留）1件のみ | 復活・リライトして再公開（高検索ボリュームKW） |
 | 介護保険制度全般 | /column/3045/ のみ | 制度解説シリーズ追加（申請方法、対象者等） |
 | 訪問看護 名古屋（地域KW） | エリアページはあるがコラム少 | 「名古屋で訪問看護を探すなら」等の地域特化コラム |
-| フレイル予防 | DB内に記事なし | デイサービスカテゴリ（非PD枠）で新規作成 |
-| DB外TOP記事（/column/2020/等） | Notion管理対象外 | 上位20記事をDBに取り込み、AIEO最適化適用 |
+| フレイル予防 | 予約投稿済み（/column/3117予定） | 公開待ち |
+| DB外404記事（16件, 2,375users/90日） | 大半が削除済み404。Googleインデックス残存 | テーマ一致7件は301リダイレクトをFSEに再提案。テーマ不一致9件はGoogle除外待ち |
+| /column/3063/（服薬管理, 31users） | HTTP 200だがNotion管理外 | Notion DB取込 |
+| AI流入（chatgpt.com: 30users/90日） | 微量だが検出開始 | AIEO最適化記事からの流入を個別LP追跡 |
 
 ## F. スキル自己改善
 
@@ -380,7 +397,7 @@ Notion（正）= WP（公開版）= Git KB（ナレッジベース）
 - **WP管理画面**: https://footage-nursing.jp/app/login_73906/
 - **ユーザー名**: footage_user
 - **パスワード**: `.env` の `WP_APP_PASSWORD` または `/apikey-manager` で取得
-- **注意**: カスタム投稿タイプ `column` はshow_in_rest: falseのため、REST API不可。ブラウザ操作で反映。
+- **注意**: カスタム投稿タイプ `column` / `rec_column` はshow_in_rest: falseのため、REST API不可（FSE対応不可確定 2026-04）。ブラウザ操作で反映。
 - **WPブラウザ操作手順**: `~/.claude/skills/seo-aieo-skills/references/wordpress-operations.md` を参照。Cookie先行インポート、1操作1確認、wait 3000 が鉄則。
 
 ## Gotchas
@@ -388,5 +405,5 @@ Notion（正）= WP（公開版）= Git KB（ナレッジベース）
 - **Notion MCP `update_properties` が無言で失敗する**: curl直叩き+読み返し検証が必須。MCP経由のプロパティ更新は使わない
 - **予約投稿のkeywords/meta_description空欄**: future記事の37/39件が空欄のまま公開される問題が発生済み。生成時に必ず全プロパティ設定
 - **訪問看護/デイサービスの投稿タイプ混同**: 訪看・デイは`column`、経営支援は`rec_column`。間違えると別セクションに混入する
-- **DB外の高PV記事が改善対象外**: /column/2020/（896PV）等のTOP記事がNotionDB管理外。定期的にGA4でチェックし取り込む
-- **WP REST API非対応**: column/rec_columnはshow_in_rest未設定。WP反映は手動またはブラウザ操作のみ
+- **DB外の高PV記事は大半が404**: /column/2020/（758users/90日）等のTOP記事が削除済み＆NotionDB管理外。テーマ一致の旧記事7件は301リダイレクト候補（FSE再提案要）、テーマ不一致の9件はGoogle除外待ち
+- **WP REST API非対応（確定）**: column/rec_columnはshow_in_rest未設定。FSEが対応不可と回答（2026-04）。WP反映はブラウザ操作のみ
