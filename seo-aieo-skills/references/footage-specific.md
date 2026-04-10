@@ -166,3 +166,12 @@
 | 経営支援サイト | footage-nursing.jp/opening/ | 経営支援集客記事のCTAリンク先 |
 | デイサービスサイト | fitness-remove.jp | デイサービス集客記事のCTAリンク先 |
 | 投稿タイプ | column / rec_column | WP内部用、記事内には出さない |
+
+## WordPress管理画面
+
+| 項目 | URL / 備考 |
+|---|---|
+| カスタムログインURL | `https://footage-nursing.jp/app/login_73906/` |
+| 投稿編集 | `https://footage-nursing.jp/wp-admin/post.php?post={WP_ID}&action=edit` |
+| REST API | カスタム投稿タイプ `rec_column` は非公開（REST API経由の更新不可） |
+| CAPTCHA | ログイン画面にひらがなCAPTCHAあり（自動ログイン不可、handoff必要） |
