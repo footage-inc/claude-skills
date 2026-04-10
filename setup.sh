@@ -4,7 +4,7 @@
 
 set -e
 
-REPO="git@github.com:oyuta-svg/claude-skills.git"
+REPO="git@github.com:footage-inc/claude-skills.git"
 TARGET="$HOME/.claude/skills"
 PLIST_NAME="com.footage.claude-skills-sync"
 PLIST_PATH="$HOME/Library/LaunchAgents/${PLIST_NAME}.plist"
@@ -27,6 +27,10 @@ else
   git clone "$REPO" "$TARGET"
 fi
 
+# サブモジュール初期化（gstack等）
+echo "サブモジュールを初期化中..."
+git -C "$TARGET" submodule update --init --recursive
+
 echo "スキルのクローン完了: $TARGET"
 
 # LaunchAgent（自動同期）のインストール — リポのテンプレートから生成
@@ -37,7 +41,7 @@ launchctl unload "$PLIST_PATH" 2>/dev/null || true
 launchctl load "$PLIST_PATH"
 
 # footage-aix リポの *-skills/ をシンボリックリンク
-FOOTAGE_AIX_REPO="$HOME/footage-aix"
+FOOTAGE_AIX_REPO="$HOME/dev/footage-aix"
 if [ -d "$FOOTAGE_AIX_REPO" ]; then
   echo ""
   echo "=== footage-aix Skills リンク ==="
