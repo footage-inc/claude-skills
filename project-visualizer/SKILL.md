@@ -272,6 +272,25 @@ KPIラベル: 12px, 400, color #999999
 テーブル偶数行:   背景 #fbfaf7
 ```
 
+### Notionカラーマッピング
+
+Notionページ生成・更新時、DESIGN.mdのカラーをNotionのカラー名に変換して使用する。
+
+| DESIGN.md | Notionカラー | 用途 |
+|---|---|---|
+| Orange `#fe8e3f` | `orange_background` | ブランドアクセント、CTA、ハイライト |
+| Navy `#2e3a61` | `blue` / `blue_background` | ヘッダー、集客ドメイン、見出し |
+| Coral `#f16f64` | `red_background` | 危険、エラー、遅延、ブロック |
+| Success `#5cb85c` | `green_background` | 完了、正常、業務改善ドメイン |
+| Warning `#f0ad4e` | `yellow_background` | 警告、注意、リスク |
+| 採用ドメイン | `purple_background` | 採用AIX関連のタグ・ラベル |
+
+**適用ルール:**
+- ステータスバッジ: 上記カラーで統一（完了=green_bg、進行中=blue、レビュー=orange_bg、遅延=red_bg）
+- セクション見出しのアイコン背景: ドメインに応じて色分け（集客=blue_bg、業務改善=green_bg、採用=purple_bg）
+- callout/quoteブロック: 情報=blue_bg、警告=yellow_bg、エラー=red_bg、成功=green_bg
+- テーブルのヘッダー行: デフォルト（Notion標準）。色付けは行単位でステータスに応じて適用
+
 ---
 
 ## 可視化の生成
