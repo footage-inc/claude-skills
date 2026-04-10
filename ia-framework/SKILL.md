@@ -250,3 +250,11 @@ STEP 1-2の結果を、以下のフォーマットで出力する。
 - **ステータスは色+アイコンの二重符号化。** 色覚多様性対応（WCAG）
 - **日本語テキストのline-height 1.8を守る。** 1.5以下は可読性が著しく低下する
 - **StatCardは6枚以下。** 7枚以上は認知限界を超える。グルーピングして2段に収める
+
+## Related Skills
+
+| スキル | 関係 | 使い所 |
+|--------|------|--------|
+| `/dashboard-design` | 後続 | Blueprintからダッシュボード具体設計に進む場合 |
+| `/penpot-uiux-design` | 後続 | Blueprint→Penpotで実装する場合 |
+| `/design-html` | 後続 | Blueprint→HTML/CSSで直接実装する場合 |

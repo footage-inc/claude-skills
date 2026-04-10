@@ -150,3 +150,10 @@ tail -20 ~/.bridge/logs/yt_watcher_stdout.log
 4. **feedbackフィルタはBot以外の全ユーザー** — `APPROVAL_USER_ID` 以外からの修正指示も検出する（2026-04-07修正済み）
 5. **Markdown記法残存** — AI生成テキストにMarkdown記号が残るとAI作成と判断される。プロンプトで禁止済みだが、変換工程でも検証すべき
 6. **WP反映はブラウザ操作** — REST APIはcolumn/rec_columnで使用不可。gstack/browseでの操作手順は `~/.claude/skills/seo-aieo-skills/references/wordpress-operations.md` を参照
+
+## Related Skills
+
+| スキル | 関係 | 使い所 |
+|--------|------|--------|
+| `/seo-aieo-skills` | 品質ルール参照元 | 記事生成時の品質基準。references/配下のルールに従う |
+| `/article-skills` | ナレッジ参照元 | 過去記事のトーン・構成の一貫性を保つために参照 |
