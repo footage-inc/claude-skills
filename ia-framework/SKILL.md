@@ -192,6 +192,17 @@ STEP 1-2の結果を、以下のフォーマットで出力する。
 - **デザイントークン:** DESIGN.md参照
 ```
 
+### Blueprint完成後: 次ステップの提示（必須）
+
+Blueprint出力後、ユーザーに次のアクションを提案する:
+
+| Blueprintの内容 | 推奨スキル | 理由 |
+|----------------|-----------|------|
+| ダッシュボード設計 | `/dashboard-design` | デジタル庁ガイドブック準拠のチャート・レイアウト詳細設計 |
+| HTML/CSS実装に進む | `/design-html` | Blueprint→本番品質HTML/CSSの直接変換 |
+| Penpotでモックアップ | `/penpot-uiux-design` | Blueprint→Penpot MCP でインタラクティブプロトタイプ |
+| 複数案を比較したい | `/design-shotgun` | 複数バリアント生成→比較→選定 |
+
 ---
 
 ## FOOTAGE固有パターン集

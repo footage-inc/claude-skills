@@ -1,0 +1,1 @@
+/Users/yutaoguhi_mini/.claude/skills/gstack/careful/SKILL.md

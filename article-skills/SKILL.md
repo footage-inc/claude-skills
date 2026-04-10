@@ -63,6 +63,17 @@ author: Footage
 - CTA配置の確認
 - マークダウン形式で出力
 
+### STEP 7: 品質ゲート（必須）
+STEP 6の出力に対して、seo-aieo-skillsの品質基準で自己チェックを実行する。**記事を渡す前にこのチェックを通すこと。**
+
+チェック項目（`~/.claude/skills/seo-aieo-skills/references/` から）:
+1. `common-mistakes.md` のNGパターンに該当しないか
+2. `aieo-patterns.md` の質問型見出し比率（50%以上）を満たすか
+3. `evidence-standards.md` のエビデンスTier基準を満たすか
+4. `footage-specific.md` のFOOTAGE独自データが適切に組み込まれているか
+
+不合格項目があればSTEP 5に戻って修正する。全項目パスで出力確定。
+
 ## ナレッジベースのファイル形式
 ```markdown
 ---
