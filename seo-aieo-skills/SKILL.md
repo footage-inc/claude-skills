@@ -44,7 +44,7 @@ references/FEEDBACK_LOOP.md        # フィードバックループ定義
 2. **カテゴリ特定**: 訪問看護集客 / 経営支援集客 / デイサービス集客
 3. **テーマ重複チェック（必須）**:
    - **正のデータソース**: `~/dev/footage-aix/data/article_state.json`（スキルローカルの `data/article_state.json` ではない）
-   - **Git KBの既存記事も必ず確認**: `~/dev/footage-aix/article-skills/knowledge-base/` 配下の全 `.md` ファイル名・タイトルを走査する
+   - **Git KBの既存記事も必ず確認**: `~/.claude/skills/article-skills/knowledge-base/` 配下の全 `.md` ファイル名・タイトルを走査する
    - 該当カテゴリの `generated_themes`（生成済み）、`rejected_themes`（却下済み）、`existing_titles_keywords`（既存記事キーワード）を確認
    - **以下に該当するテーマは提案禁止**:
      - `rejected_themes` に含まれるテーマ、またはその類似テーマ
@@ -134,7 +134,7 @@ references/FEEDBACK_LOOP.md        # フィードバックループ定義
 
 以下は起動時にNotionから最新件数を取得する:
 
-!`ls ~/dev/footage-aix/article-skills/knowledge-base/訪問看護集客/*.md 2>/dev/null | wc -l | xargs printf "訪問看護集客: %d件 / " && ls ~/dev/footage-aix/article-skills/knowledge-base/経営支援集客/*.md 2>/dev/null | wc -l | xargs printf "経営支援集客: %d件 / " && ls ~/dev/footage-aix/article-skills/knowledge-base/デイサービス集客/*.md 2>/dev/null | wc -l | xargs printf "デイサービス集客: %d件\n" 2>/dev/null || echo "(Git KB未検出。フォールバック: 訪看55/経営28/デイ17)"`
+!`ls ~/.claude/skills/article-skills/knowledge-base/訪問看護集客/*.md 2>/dev/null | wc -l | xargs printf "訪問看護集客: %d件 / " && ls ~/.claude/skills/article-skills/knowledge-base/経営支援集客/*.md 2>/dev/null | wc -l | xargs printf "経営支援集客: %d件 / " && ls ~/.claude/skills/article-skills/knowledge-base/デイサービス集客/*.md 2>/dev/null | wc -l | xargs printf "デイサービス集客: %d件\n" 2>/dev/null || echo "(Git KB未検出。フォールバック: 訪看55/経営28/デイ17)"`
 
 | カテゴリ | 事業体 | Post Type | 上限 | ターゲット |
 |---|---|---|---|---|
