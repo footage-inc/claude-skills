@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/plan-ceo-review/SKILL.md
+../gstack/plan-ceo-review/SKILL.md

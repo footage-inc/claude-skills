@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/office-hours/SKILL.md
+../gstack/office-hours/SKILL.md

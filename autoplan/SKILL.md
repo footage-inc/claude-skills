@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/autoplan/SKILL.md
+../gstack/autoplan/SKILL.md

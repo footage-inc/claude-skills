@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/pair-agent/SKILL.md
+../gstack/pair-agent/SKILL.md

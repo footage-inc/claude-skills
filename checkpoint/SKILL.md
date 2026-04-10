@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/checkpoint/SKILL.md
+../gstack/checkpoint/SKILL.md

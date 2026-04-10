@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/land-and-deploy/SKILL.md
+../gstack/land-and-deploy/SKILL.md

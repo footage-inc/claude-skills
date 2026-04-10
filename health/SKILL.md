@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/health/SKILL.md
+../gstack/health/SKILL.md

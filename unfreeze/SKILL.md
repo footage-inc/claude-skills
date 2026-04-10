@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/unfreeze/SKILL.md
+../gstack/unfreeze/SKILL.md

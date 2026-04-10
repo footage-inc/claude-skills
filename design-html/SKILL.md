@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/design-html/SKILL.md
+../gstack/design-html/SKILL.md

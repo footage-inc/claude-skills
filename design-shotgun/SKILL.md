@@ -1,1 +1,1 @@
-/Users/yutaoguhi_mini/.claude/skills/gstack/design-shotgun/SKILL.md
+../gstack/design-shotgun/SKILL.md
