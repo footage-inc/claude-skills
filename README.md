@@ -19,17 +19,23 @@ Claude Code のカスタムスキル集。FOOTAGE AIXプロジェクトで使用
 ## 新しいMacへのセットアップ
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/oyuta-svg/claude-skills/main/setup.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/footage-inc/claude-skills/main/setup.sh)
 ```
 
 または手動：
 
 ```bash
-# 1. クローン
-git clone git@github.com:oyuta-svg/claude-skills.git ~/.claude/skills
+# 読み取り専用（他メンバー向け）
+git clone https://github.com/footage-inc/claude-skills.git ~/.claude/skills
 
-# 2. 自動pull設定（LaunchAgent）
-cp ~/.claude/skills/com.footage.claude-skills-sync.plist ~/Library/LaunchAgents/
+# push権限あり（管理者向け・SSH必要）
+git clone git@github.com:footage-inc/claude-skills.git ~/.claude/skills
+
+# サブモジュール初期化
+git -C ~/.claude/skills submodule update --init --recursive
+
+# 自動pull設定（LaunchAgent）
+sed "s|__HOME__|${HOME}|g" ~/.claude/skills/com.footage.claude-skills-sync.plist > ~/Library/LaunchAgents/com.footage.claude-skills-sync.plist
 launchctl load ~/Library/LaunchAgents/com.footage.claude-skills-sync.plist
 ```
 

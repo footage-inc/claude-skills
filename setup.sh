@@ -4,7 +4,18 @@
 
 set -e
 
-REPO="git@github.com:footage-inc/claude-skills.git"
+# SSH書き込み用 / HTTPS読み取り専用
+REPO_SSH="git@github.com:footage-inc/claude-skills.git"
+REPO_HTTPS="https://github.com/footage-inc/claude-skills.git"
+
+# SSHキーがあればSSH（push可能）、なければHTTPS（読み取り専用）
+if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+  REPO="$REPO_SSH"
+  echo "SSH認証OK → SSH URL（push可能）"
+else
+  REPO="$REPO_HTTPS"
+  echo "SSH認証なし → HTTPS URL（読み取り専用）"
+fi
 TARGET="$HOME/.claude/skills"
 PLIST_NAME="com.footage.claude-skills-sync"
 PLIST_PATH="$HOME/Library/LaunchAgents/${PLIST_NAME}.plist"
